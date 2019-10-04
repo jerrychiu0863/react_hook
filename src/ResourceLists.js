@@ -1,21 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
+import useResources from './useResources';
 
 const ResourceLists = ({ resource }) => {
-  const [resources, setResources] = useState([]);
-
-  //Run the function  only when the value 
-  //in the array changes
-  useEffect(() => {
-    fetchResource(resource);
-  }, [resource]);
-
-  const fetchResource = async resource => {
+  const resources = useResources(resource);
+  /*const fetchResource = async resource => {
     const response = await axios.get(
       `https://jsonplaceholder.typicode.com/${resource}`
     );
     setResources(response.data);
-  };
+  };*/
 
   //Make another request
   /*async componentDidUpdate(prevProps) {
@@ -28,7 +21,13 @@ const ResourceLists = ({ resource }) => {
     }
   }*/
 
-  return <div>{resources.length}</div>;
+  return (
+    <ul>
+      {resources.map(record => (
+        <li>{record.title}</li>
+      ))}
+    </ul>
+  );
 };
 
 export default ResourceLists;
